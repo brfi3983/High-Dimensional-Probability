@@ -1,0 +1,107 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm, amsmath,textcomp,amssymb,geometry,graphicx,enumerate, mathtools, braket, hyperref}
+\usepackage[makeroom]{cancel}
+
+\def\Name{Brandon Finley}  % Your name
+\def\Homework{1 pt. 2} % Number of Homework
+\def\Session{Fall 2020 } % Semester and year
+\def\CRS{APPM 5515: High Dimensional Probability}% Course number : course name
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\title{\CRS -- \Session --- Homework \Homework} % Course number : course name -- \
+\author{\Name}
+\markboth{\CRS--\Session\  Homework \Homework\ \Name}{\CRS-- \Session\-- Homework \Homework\ -- \Name}
+\pagestyle{myheadings}
+\date{}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+\begin{document}
+\maketitle
+
+6. Prove that 
+\begin{equation}
+	\frac{X_n}{n} \hspace{0.2in}\text{converges to 0 almost surely.}
+\end{equation}
+\begin{proof}
+From the question prompt, we know that $n^{-1}S_n = n^{-1}\sum_{i=1}^{n} X_i \to 0$ almost surely. \\
+So, 
+\begin{align*}
+	n^{-1}\sum_{i=1}^{n} X_i &= \frac{1}{n}\left[ X_1 + X_2 + X_3 + \cdots + X_n \right] \\
+	&= \frac{X_1}{n} + \frac{X_2}{n} + \frac{X_3}{n} + \cdots + \frac{X_n}{n}
+\end{align*}
+and we know that $n^{-1}S_n = n^{-1}\sum_{i=1}^{n} X_i$ converges to 0 almost surely. The only way this is possible is if each term also converges to 0 almost surely.
+Therefore, we know the final term, $\frac{X_n}{n}$ converges to 0 almost surely.
+\end{proof}
+7. Deduce from the previous equation that
+\begin{equation}
+	P \left( \left| \frac{X_i}{i} \right| \ge 1 \text{ occurs for infinitely many i} \right) = 0
+\end{equation}
+\begin{proof}
+	That is, $\left| \frac{X_1}{1} \right| \ge 1 \cap \left| \frac{X_2}{2} \right| \ge 1 \cap \left| \frac{X_3}{3} \right| \ge 1 \cap \cdots \cap \left| \frac{X_n}{n} \right| \ge 1$ \\
+	From the previous homework, we know that $X_i = i, -i, \text{ or } 0.$ Using these values, we get the expression for
+	\begin{align*}
+		\left| \frac{X_i}{i} \right| &= \left| \frac{i}{i} \right| \text{ or } \left| \frac{-i}{i} \right| \text{ or } \left| \frac{0}{i} \right| \\
+		&= \left| 1 \right| \text{ or } \left| -1 \right| \text{ or } \left| 0 \right| \\
+		&= 1 \text{ or } 1 \text{ or } 0
+	\end{align*}
+	but we know that $P\left(X_i = 0 \right) = 1 - \frac{1}{i\log i} \neq 1, \forall i \in Z^{+} \setminus 1$. However, we can take the limit of $i$ at infinity and see that the probability that $X_i = 0$ approaches 1. 
+	\begin{align*}
+		\lim_{i \to \infty} \left[ 1 - \frac{1}{i \log i}\right] \to \left[ 1 - \frac{1}{\infty}\right] = 1.
+	\end{align*}
+	This implies that as $i$ approaches infinity, that $X_i$ begins to take 0 as its value. Therefore, the magnitude $\left| \frac{X_i}{i} \right|$ is no longer greater or equal to 1 for the rest of the $i$'s and that the corresponding probability is 0.
+\end{proof}
+8. Let $\Omega_i$ be the event $\left| \frac{X_i}{i} \right| \ge 1$. Compute $P(\Omega_i)$ \\
+\begin{align*}
+	P(\Omega_i) &= P \left(\left| \frac{X_i}{i} \right| \ge 1 \right) \\
+	&= \frac{1}{2i \log i} + \frac{1}{2i \log i} + 0 \\
+	&=  2\left( \frac{1}{2i \log i} \right) \\
+	&= \frac{1}{i \log i}
+\end{align*}
+9. Prove that
+\begin{equation}
+	\lim_{n \to \infty} \sum_{i=1}^{n} P(\Omega_i) = \infty
+\end{equation}
+\begin{proof}
+	We will prove this via the integral test. Namely, the integral test holds for $m > N = 1$ and that $f(m)$ for $m > 1$, $f(m)$ is a positive, non-increasing function (monotonically decreasing). This allows us to apply the integral test and to conclude that the convergence behavior 
+	of the series is the same as the integral. The following test is applied:
+	\begin{align*}
+		\int_{1}^\infty \frac{1}{m \log m} \,dm &= \lim_{a \to \infty} \int_{1}^{a} \frac{1}{m \log m} \,dm \\
+		&= \lim_{a \to \infty} \left[ \int_{0}^{\log(a)} \frac{1}{u} \,du \right] &&(\text{let } u = \log m) \\
+		&= \lim_{a \to \infty} \left[ \log|u|~\Big|_0^{\log(a)}\right] \\
+		&= \lim_{a \to \infty} \left[ \log|\log(a)| - \log|0|\right] \\
+		&= \infty - (-\infty) \\
+		&= \infty \\
+		& \implies \text{this series is divergent.}
+	\end{align*}
+\end{proof}
+10. Prove that 
+\begin{equation}
+	P \left( \frac{S_n}{n} \to 0 \right) = 0
+\end{equation}
+\begin{proof}
+	Assume that $\exists~\epsilon > 0$. Then, using the values from above, we can test the absolute convergence(assuming that is the meaning behind the arrow)
+	\begin{align*}
+		\frac{S_n}{n} &= \frac{1}{n} \cdot \sum_{i=1}^{n} X_i \\
+		&\le \frac{1}{n} \cdot \sum_{i=1}^{n} \left| X_i \right| \\
+		&= \frac{1}{n} \cdot \left[ \left| X_1 \right| + \left| X_2 \right| + \left| X_3 \right| + \cdots + \left| X_n \right| \right]\\
+	\end{align*}
+	We know that $X_i = -i, 0, \text{ or } i$, but due to the magnitude, we know it takes either $i$ or 0. Continuing the proof, 
+	\begin{align*}
+		\frac{S_n}{n} &= \sum_{i = 0}^{n} \frac{i}{n} \\
+		&=  0 + \frac{1}{n} + \frac{2}{n} + \frac{3}{n} + \cdots + \cancelto{1}{\frac{n}{n}} \\
+		&> 1 \text{ (assuming $n > 0$)} \\
+	\end{align*} 
+	Since the sum is always greater than 1 regardless of the positive n you choose, there is no possible way for the sum to converge to 0. 
+	Therefore, $P \left( \frac{S_n}{n} \to 0 \right) = 0$. Assuming the arrow is any type of convergence, the series also fails the divergence test and so diverges regardless of the convergence method. This also correborates the conclusion reached. 
+\end{proof}
+11. Conclude. \\
+Since we started with the assumption that $n^{-1} S_n = n^{-1} \sum_{i=1}^{n} X_i \to 0$ almost surely, and in 10), we showed that $P(\frac{S_n}{n} \to 0) = 0$,
+we can say that by contradition, $n^{-1}\sum_{i=1}^{n}X_i$ does not converge to 0 almost surely. And by extension, this shows that the $X_i$'s do not obey the strong law of large numbers.
+\end{document}

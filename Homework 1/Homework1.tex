@@ -1,0 +1,141 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm, amsmath,textcomp,amssymb,geometry,graphicx,enumerate, mathtools, braket, hyperref}
+
+% \usepackage{hyperref}
+% \usepackage{amsmath}
+% \usepackage{amsthm}
+% \usepackage{braket}
+
+\def\Name{Brandon Finley}  % Your name
+\def\Homework{1 pt. 1} % Number of Homework
+\def\Session{Fall 2020 } % Semester and year
+\def\CRS{APPM 5515: High Dimensional Probability}% Course number : course name
+
+\title{\CRS -- \Session --- Homework \Homework} % Course number : course name -- \
+\author{\Name}
+\markboth{\CRS--\Session\  Homework \Homework\ \Name}{\CRS-- \Session\-- Homework \Homework\ -- \Name}
+\pagestyle{myheadings}
+\date{}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+\begin{document}
+\maketitle
+
+\noalign
+\paragraph{1. Prove that the probability that none of the 
+$\Omega_i$, with $i > i_0$, occur is given by}\text{}\\
+\begin{equation*}
+    \prod_{i=i_0 + 1} ^\infty (1-p_i)
+\end{equation*}
+\begin{proof}
+First note that the events are \textit{independent}, and that the probability that each occur is $p_i$. Then the probability that event $\Omega_i$ does not occur is $1 - p_i$. \\
+
+Now, since the events are independent, the joint probability that both occur are the product of the probabilities, that is $p_1 p_2  \cdots p_i$. The same follows for the probability that none occur. And when you constrict $i > i_0$, we get the following that none of the events occur:
+\begin{equation*}
+    \Aboxed{\prod_{i=i_0 + 1} ^\infty (1-p_i)}
+\end{equation*}
+\end{proof}
+\hline
+\paragraph{2. Prove the following inequality} \text{}\\
+\begin{equation*}
+    \prod_{i=i_0 + 1} ^\infty (1-p_i) \le \exp \left\{ -\sum_{i=i_0 + 1} ^\infty p_i \right\}
+\end{equation*}
+\begin{proof}
+First, assume $x = -p_i$. Then our equation becomes
+\begin{equation*}
+    \prod_{i=i_0 + 1} ^\infty (1+x)
+\end{equation*}
+Now take the log and simplify
+\begin{align*}
+    \prod_{i=i_0 + 1} ^\infty (1+x) &= \\
+    &= \ln \left(\prod_{i=i_0 + 1} ^\infty (1+x) \right) \\
+    &= \sum_{i=i_0 + 1} ^\infty \ln(1+x) \\
+    \implies &\le \sum_{i=i_0 + 1} ^\infty x \\
+    \therefore~\Aboxed{\prod_{i=i_0 + 1} ^\infty (1-p_i) &\le \exp \left\{ -\sum_{i=i_0 + 1} ^\infty p_i \right\}} \\
+\end{align*}
+\end{proof}
+
+\hline
+\paragraph{3. Prove that if
+\begin{equation*}
+    \sum_{i=1}^{\infty} P(\Omega_i) \hspace{0.5 in}&&\text{diverges,}
+\end{equation*}
+then
+\begin{equation*}
+    P(\text{infinitely many $\Omega_i$ occur}) = 1.
+\end{equation*}} \text{}\\
+\begin{proof}
+From question 1, we can set a bound for the above series. That is
+\begin{align*}
+    \prod_{i=i_0 + 1} ^\infty (1-p_i) &\le \exp \left\{ -\sum_{i=i_0 + 1} ^\infty p_i \right\}
+\end{align*}
+Since $p_i > 0$,
+\begin{align*}
+    \exp \left\{ -\sum_{i=i_0 + 1} ^\infty p_i \right\} \to 0 \\
+    \implies \prod_{i=i_0 + 1} ^\infty (1-p_i) \to 0
+\end{align*}
+This then implies that the probability that \text{none of them occur is 0}, which is the complement that the probability that \text{infinite of them occur is 1.}
+\end{proof}
+\hline
+\paragraph{4. Compute $E[S_n]$ and $V_n$} \text{}\\
+First let us compute $E[S_n]$. \\
+\begin{align*}
+    E[S_n] &= \\
+    &= E \left[ \sum_{i=1} ^{n} E(X_i) \right] \\
+    &= \sum_{i=1} ^{n} E(X_i) \\
+    &= \sum_{i=1} ^{n} X_i \cdot P(X_i) \\
+\end{align*}
+Now, we note that $X_i$ is a sequence of events that takes discreet values, that is $X_i = -i, i, \text{or } 0$. Also note that when $i = 1$, its probability is $0$. Summing all possible events within the sample space, we get the following for the expectation value:
+\begin{align*}
+    E(S_n) &= \\
+    &= \overbrace{1 \cdot 0}^{X_1 = 0} + \underbrace{0 \cdot \left(1 - \frac{1}{i \log i} \right)}_{X_i \text{ when } X_i = 0 \text{ for } i \ge 2} + \underbrace{(i - i) \cdot \frac{1}{2 i \log i}}_{X_i \text{ when } X_i = i, -i \text{ for } i \ge 2} \\
+    & = 0 + 0 + 0 \\
+    & = 0
+\end{align*}
+Similarly, we know the definition of the variance is the following
+\begin{equation*}
+    V_n = E[S_n^2] - E^2[S_n]
+\end{equation*}
+We also know that $X_i$ is independent from eachother. This leads to the following identity
+\begin{equation*}
+    V_n = V(S_n) = n \cdot V[X_i] 
+\end{equation*}
+Formally, we can calculate...
+\begin{align*}
+    V(S_n) &= \\
+    &= n \cdot V[X_i] \\
+    &= n \cdot \left[ E[X_i^2] - E^2[X_i] \right] \\
+    &= n \cdot \left[\frac{i}{\log i} - 0 \right] \\
+    &= \frac{n \cdot i}{\log i}
+\end{align*}
+\begin{equation*}
+    \therefore \boxed{E(S_n) = 0 \text{ and } V(S_n) = \frac{n \cdot i}{\log i}}
+\end{equation*}
+\hline
+\paragraph{5. Prove } \text{}\\
+\begin{equation*}
+    \forall \epsilon > 0, \lim_{n \to \infty} P \left( \left|\frac{S_n}{n} \right| \ge \epsilon \right) = 0,
+\end{equation*}
+\begin{proof}
+It is sufficient to prove
+\begin{equation*}
+    \lim_{n \to \infty} E \left[ \left| \frac{S_n}{n} \right|^2 \right] = 0.
+\end{equation*}
+Now, expanding on this from our calculations in (4), we can obtain the following process
+\begin{align*}
+    \lim_{n \to \infty} E \left[ \left| \frac{S_n}{n} \right|^2 \right] &= \\
+      &= \lim_{n \to \infty} \frac{1}{n^2} E\left[ \left| S_n \right|^2 \right]  \\
+     &= \lim_{n \to \infty} \frac{1}{n^2} E\left[ \left( \sum_{i=1}^{n} X_i \right)^2 \right ]\\
+     &= \lim_{n \to \infty} \frac{1}{n^2} \frac{n \cdot i}{\log i} \\
+     &= \lim_{n \to \infty} \frac{i}{n \log i} \\
+     &\to 0 \text{ as } n \to \infty \\
+\end{align*}
+\end{proof}
+\end{document}

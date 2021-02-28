@@ -1,0 +1,125 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm, bookmark, amsmath,textcomp,amssymb,geometry,graphicx,enumerate, mathtools, braket, hyperref, float, listings}
+\usepackage[makeroom]{cancel}
+
+\def\Name{Brandon Finley}  % Your name
+\def\Homework{5} % Number of Homework
+\def\Session{Fall 2020 } % Semester and year
+\def\CRS{APPM 5515: High Dimensional Probability}% Course number : course name
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\title{\CRS -- \Session --- Homework \Homework} % Course number : course name -- \
+\author{\Name}
+\markboth{\CRS--\Session\  Homework \Homework\ \Name}{\CRS-- \Session\-- Homework \Homework\ -- \Name}
+\pagestyle{myheadings}
+\date{}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+	\item Since we know the radius of $B^n(0,1)$ is 1. And that $K(x_o, \varepsilon) = \{ x \in S^{n-1}(1), \langle x,x_0 \rangle \ge \varepsilon \}$, we can use the fact that the radius is one and that $x_1$ is at a height of epsilon. Thus, we can say
+	\begin{align*}
+		\varepsilon^2 + r^2 = 1 &\implies \left( \frac{x_1}{x_0} \right)^2 + r^2 = 1 \\
+		&\implies r^2= 1 - \left( \frac{x_1}{x_0} \right)^2 \\
+		&\implies \boxed{r = \sqrt{1 - \left( \frac{x_1}{x_0} \right)^2} = \sqrt{1 - \varepsilon^2}}
+	\end{align*}
+	\item From lecture, we know the following relationship
+	\begin{equation}
+		Vol(B^n(r)) = r^n \cdot Vol(B^n(1))
+	\end{equation}
+	Now, note that our rotationally invariant sphere is also invariant to translation (in terms of measure). Thus, we can simply ignore the center of the sphere and use the above finding.
+	Doing this, we can say
+	\begin{equation}
+		Vol(B^n(x_1, r)) = Vol(B^n(0, r)) = Vol(B^n(r))
+	\end{equation}
+	Thus,
+	\begin{align*}
+		Vol(B^n(x_1, r)) &= Vol(B^n(r)) \\
+		&= r^n \cdot Vol(B^n(1)) \\
+		&= \left[ \sqrt{1 - \left( \frac{x_1}{x_0}\right)^2 } \right]^n \cdot Vol(B^n(1)) \\
+		&= \boxed{\left[ \sqrt{1 - \varepsilon^2 }\right]^n \cdot Vol(B^n(1))} \\
+	\end{align*}
+	\item
+	\begin{proof}
+	To prove that $C(K) \subset B^n(x_1, r)$, it is equivalent to show that $\Vert x_1 - y_0 \Vert \le r$, where $y_0 \in K(x_0, \varepsilon)$.
+	Shown in the figure, since our cap is defined to be dependent on $x_0$, which is dependent on $\varepsilon$, and $x_1 = \varepsilon x_0$, we know that our shifted sphere at $x_1$ will consequently cause our cap and corresponding cone $C(K)$ to be shifted in the same direction (by construction).
+
+	\par Additionally, because it is a sphere, the largest euclidean distance is bounded by the our radius, and any subsequent shift, with a shift at least as large as $\varepsilon$, towards its exterior will lead to a euclidean distance from $x_1$ to its corresponding cap $K(x_0, \epsilon)$ to be less than or equal to $r$ since $\min \langle x, x_0 \rangle = \varepsilon$.
+	\par In short, since by construction our $x_1$ is always moving along the axis of $x_0$, the largest euclidean distance from $x_1$ to the spherical cap is its perpendicular axis at the point when $\varepsilon$ is minimized, which in our case is equal to $r$, and so it follows that $\Vert x_0 - y_0 \Vert \le r$.
+
+	\end{proof}
+	\item
+	\begin{proof}
+	Since we know that $C(K) \subset B^n(x_1, r)$, we can say $C(K) \subset B^n(x_1, \sqrt{1 - \varepsilon^2})$.
+	And so using question 2, we can say
+	\begin{equation*}
+	C(K) \subset \left[ \sqrt{1 - \varepsilon^2 }\right]^n B^n(0, 1)
+	\end{equation*}
+	So taking the volume, we get the inequality
+	\begin{align*}
+	Vol(C(K)) &\le Vol \left( \left[ \sqrt{1 - \varepsilon^2 }\right]^n B^n(0, 1) \right) \\
+	Vol(C(K)) &\le \left[ \sqrt{1 - \varepsilon^2 }\right]^n Vol(B^n(0, 1)) \\
+	\end{align*}
+	Now, using $1 + x \le e^x$, we know $1 - \varepsilon^2 \le e^{-\varepsilon^2}$. So we say,
+	\begin{align*}
+		Vol(C(K)) &\le \left[ \sqrt{1 - \varepsilon^2 }\right]^n Vol(B^n(0, 1)) \\
+		Vol(C(K)) &\le e^{\frac{-n \varepsilon^2}{2}} Vol(B^n(0, 1)) \\
+	\end{align*}
+	\end{proof}
+	\item
+	\begin{proof}
+	First, note that we know the following:
+	\begin{subequations}
+		\begin{equation} \label{eqn:ineq}
+			Vol(C(k)) \le e^{\frac{-n \varepsilon^2}{2}} Vol(B^n(0, 1))
+		\end{equation}
+		\begin{equation}
+			\frac{Vol(C(K))}{n} = \sigma(K)
+		\end{equation}
+		\begin{equation}
+			\frac{Vol(B^n(0, 1))}{n}= \sigma(S^{n-1}(1))
+		\end{equation}
+		\begin{equation}
+			\mu^{n-1}(K) = \frac{\sigma(K)}{\sigma(S^{n-1}(1))}
+		\end{equation}
+	\end{subequations}
+	And so, we can use \ref{eqn:ineq} to do the following
+	\begin{align*}
+	Vol(C(K)) &\le e^{\frac{-n \varepsilon^2}{2}} Vol(B^n(0, 1)) \\
+	\sigma(K) \cdot n &\le e^{\frac{-n \varepsilon^2}{2}} \sigma(S^{n-1}(1)) \cdot n \\
+	\implies \frac{\sigma(K)}{\sigma(S^{n-1}(1))} &\le e^{\frac{-n \varepsilon^2}{2}} \\
+	\implies \mu^{n-1}(K) &\le  e^{\frac{-n \varepsilon^2}{2}} \\
+	\implies \mu^{n-1}(K(x_0, \varepsilon)) &\le  e^{\frac{-n \varepsilon^2}{2}} \hspace{0.5cm}\text{(notation)}
+	\end{align*}
+	\end{proof}
+	\item Paul Levy says the optimal bound is
+	\begin{equation}
+		\le \sqrt{\frac{\pi}{8}} \cdot e^{\frac{-(n - 2)\varepsilon^2}{2}}
+	\end{equation}
+	And our equation is the following bound
+	\begin{equation}
+		\le e^{\frac{-n \varepsilon^2}{2}}
+	\end{equation}
+	Now, note the following
+	\begin{align*}
+		\sqrt{\frac{\pi}{8}} \cdot e^{\frac{-(n - 2)\varepsilon^2}{2}} = \sqrt{\frac{\pi}{8}} \cdot e^{\frac{-n \varepsilon^2}{2}} \cdot e^{\varepsilon^2} \\
+	\end{align*}
+	And we know that $ \max \left[ e^{\varepsilon^2} \cdot \sqrt{\frac{\pi}{8}} \right] \approx 0.83 < 1$. Thus,
+	\begin{equation}
+	\sqrt{\frac{\pi}{8}} \cdot e^{\frac{-(n - 2)\varepsilon^2}{2}} < e^{\frac{-n \varepsilon^2}{2}}
+	\end{equation}
+	So in summary, our bound is nearly as tight as Levy's bound, with a constant factor as a difference.
+\end{enumerate}
+\begin{center}
+	\boxed{{\textbf{| END |}}}
+\end{center}
+\end{document}

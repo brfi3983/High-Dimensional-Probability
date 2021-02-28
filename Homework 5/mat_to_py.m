@@ -1,0 +1,6 @@
+csvwrite('data1.csv',data1)
+csvwrite('data2.csv',data2)
+csvwrite('data3.csv',data3)
+csvwrite('data4.csv',data4)
+csvwrite('data5.csv',data5)
+csvwrite('data6.csv',data6)

@@ -1,0 +1,204 @@
+\documentclass[11pt]{article}
+\usepackage{amsthm, bookmark, amsmath,textcomp,amssymb,geometry,graphicx,enumerate, mathtools, braket, hyperref, float, listings}
+\usepackage[makeroom]{cancel}
+
+\def\Name{Brandon Finley}  % Your name
+\def\Homework{4} % Number of Homework
+\def\Session{Fall 2020 } % Semester and year
+\def\CRS{APPM 5515: High Dimensional Probability}% Course number : course name
+\renewcommand\qedsymbol{$\blacksquare$}
+
+\title{\CRS -- \Session --- Homework \Homework} % Course number : course name -- \
+\author{\Name}
+\markboth{\CRS--\Session\  Homework \Homework\ \Name}{\CRS-- \Session\-- Homework \Homework\ -- \Name}
+\pagestyle{myheadings}
+\date{}
+
+\textheight=9in
+\textwidth=6.5in
+\topmargin=-.75in
+\oddsidemargin=0.25in
+\evensidemargin=0.25in
+\setlength\parindent{0pt}
+\allowdisplaybreaks
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+	\item Prove that \textbf{Q} is an isometry ``in expectation'',
+	\begin{equation}
+		E \left[ \left\Vert \textbf{Q}x \right\Vert ^2 \right] = E \left[ \left\Vert \frac{1}{\sqrt{d}}y \right\Vert ^2 \right] = || x ||^2
+	\end{equation}
+	\textbf{Solution:} \\\\
+	\begin{proof}
+	Note that 
+	\[
+	\frac{1}{\sqrt{d}}y = \begin{bmatrix}
+		\frac{1}{\sqrt{d}}y_1, \cdots, \frac{1}{\sqrt{d}}y_d
+	\end{bmatrix}^{T}
+	\]
+	Thus, 
+	\begin{align*}
+		\left\Vert \frac{1}{\sqrt{d}}y \right\Vert ^2 &= \left( \sqrt{
+			\left(\frac{1}{\sqrt{d}}y_1 \right)^2 + \cdots + \left(\frac{1}{\sqrt{d}}y_d \right)^2 }\right)^2 \\
+			&= \frac{1}{d}y_1^2 + \cdots + \frac{1}{d}y_d^2 \\
+			&= \frac{1}{d} \sum_{i = 1}^{d} y_i^2
+	\end{align*}
+	So, 
+	\begin{align*}
+		E \left[ \left\Vert \frac{1}{\sqrt{d}}y \right\Vert ^2 \right] &= E \left[ \frac{1}{d} \sum_{i = 1}^{d} y_i^2 \right] \\
+		&= \frac{1}{d} E \left[ \sum_{i = 1}^{d} y_i^2 \right] \\
+		&= \frac{1}{d} \sum_{i = 1}^{d} E \left[y_i^2 \right]
+	\end{align*}
+	But, $y_i$ are from \textbf{G} whose entries are independent, zero-mean, unit variance. Thus,
+	\begin{align*}
+		\frac{1}{d} \sum_{i = 1}^{d} E \left[y_i^2 \right] &= \frac{1}{d} \sum_{i = 1}^{d} x_i^2 \\
+		&= \frac{1}{d} \cdot d \cdot \left\Vert x \right\Vert^2_2 \\
+		&= \left\Vert x \right\Vert^2_2
+	\end{align*}
+	\end{proof}
+	\item Prove that the $y_i$ are independent sub-Guassian random variables that that there exists a $c_1 > 0$ s.t.,
+	\begin{equation*}
+		\Vert y_i \Vert_{\Psi_2} \le \Vert x \Vert_2 \frac{v}{\sqrt{c_1}}
+	\end{equation*}
+	\textbf{Solution:} \\\\
+	\begin{proof}
+		Notice that $x_i \in \mathbb{R}$ and that $g_{i,j}$ are independent sub-Guassian random variables. Then note that $y = \textbf{G}x$, so this implies that 
+		$\textbf{G}x = \begin{bmatrix}
+			\overbrace{g_{1,1}x_1 + g_{1,2}x_2 + \cdots + g_{1,n}x_n}^{y_1} \\
+			\vdots \\
+			\underbrace{g_{d,1}x_1 + g_{d,2}x_2 + \cdots + g_{d,n}x_n}_{y_d}
+		\end{bmatrix}$
+		Now, define $z_j = g_{i,j}x_j$, and so, by a proposition made in class, we know if $z_1, \cdots, z_n$ are independent sub-Guassian random variables then,
+		\begin{equation*}
+			\sum_{j = 1}^{n} z_j = y_i
+		\end{equation*} is also sub-Guassian.
+		Now to prove the inequality. We know from the proposition there exists a constant $c_1 > 0, c_1 \in \mathbb{R}$ s.t. 
+		\begin{equation*}
+			\left\Vert \sum_{j=1}^{n}z_j \right\Vert_{\Psi_2} \le c_1 \cdot \sum_{j=1}^{n}\Vert z_j \Vert_{\Psi_2}
+		\end{equation*}
+		which in our case
+		\begin{equation*}
+			\left\Vert y_i \right\Vert_{\Psi_2} \le c_1 \cdot \sum_{j=1}^{n}\Vert g_{i,j}x_j \Vert_{\Psi_2}
+		\end{equation*}
+		Thus, we can do the following
+		\begin{align*}
+			c_1 \sum_{j=1}^{n}\Vert g_{i,j}x_j \Vert_{\Psi_2} &= \sum_{j=1}^{n}\Vert g_{i,j} \Vert_{\Psi_2} \cdot | x_j | \\
+			&\le c_1 \sum_{j=1}^{n} max\Vert g_{i,j}\Vert_{\Psi_2} \cdot | x_j |\\
+			&= c_1 \sum_{j=1}^{n} v \cdot |x_j| \\
+			&= c_1 \cdot v \cdot \Vert x \Vert_1 \\
+			&\le c_1 \cdot v \cdot \Vert x \Vert_2 &&\text{(where $c_1 = \frac{1}{\sqrt{c_2}}$)} 
+		\end{align*}
+	\end{proof}
+	\item Compute $\mathbb{E}[y_i]$ and $Var[y_i]$ as a function of $\Vert x \Vert$ \\\\
+	\textbf{Solution:} \\
+	\begin{proof}
+	First we show $E[y_i]$. 
+	\begin{align*}
+		E[y_i] &= E \left[ \sum_{j=1}^{n} g_{i,j}x_j \right] = \sum_{j=1}^{n} E \left[ g_{i,j}x_j \right] \\
+		&= \sum_{j=1}^{n} x_j E \left[ g_{i,j} \right] \\
+		&= \sum_{j=1}^{n} x_j 0 &&\text{(since $g_{i,j}$ is sub-Guassian with mean $0$)} \\
+		&= \sum_{j=1}^{n} 0 \\
+		&= 0
+	\end{align*}
+	Now, we show $Var[y_i]$.
+	\begin{align*}
+		Var[y_i] &= E[y_i^2] - E^2[y_i] \\
+		&= E[y_i^2] \\\
+		&= E \left[\left(\underbrace{\sum_{j=1}^n g_{i,j}x_j}_{N \left(0, \sum_{j=1}^n x_j^2 \right)} \right)^2 \right] \\
+		&= \sum_{j=1}^n x_j^2 &&\text{(since it is just Guassian, we can take the variance out)}\\
+		&= \Vert x \Vert_2^2 
+	\end{align*}
+\end{proof}
+	\item Prove that $y_i^2$ is sub-exponential and that
+	\begin{equation*}
+		\Vert y_i^2 \Vert_{\Psi_1} = \Vert y_i \Vert_{\Psi_2}^{2}
+	\end{equation*}
+	\textbf{Solution:} \\\\
+	\begin{proof}
+	From a lemma in class, we know that if $X$ and $Y$ are sub-Guassian, then their product, $XY$ is subexponential. It also follows that if we define $X = y_i$ and $Y = y_i$ then we can say $XY = y_i \cdot y_i = y_i^2$ is sub-exponential. Finally, the lemma also says
+	\begin{equation*}
+		\Vert XY \Vert_{\Psi_1} \le \Vert X \Vert_{\Psi_2} \Vert Y \Vert_{\Psi_2}
+	\end{equation*}
+	which implies
+	\begin{equation*}
+		\Vert y_i \cdot y_i \Vert_{\Psi_1} = \Vert y_i^2 \Vert_{\Psi_1} \le \Vert y_i \Vert_{\Psi_2} \Vert y_i \Vert_{\Psi_2} = \Vert y_i \Vert_{\Psi_2}^2
+	\end{equation*}
+\end{proof}	
+	\item Use the corollary of the general Bernstein inequality which was presented in class, to show that there exists an $\alpha > 0$ and $\beta > 0$ s.t.
+	\begin{equation*}
+		P \left( \left| \frac{1}{d} \sum_{i=1}^d z_i \right| \ge \epsilon \right) \le \exp 2 \left(- \alpha \cdot \min \left( \frac{\epsilon^2}{\beta^2},\frac{\epsilon}{\beta} \right)d \right)
+	\end{equation*}
+	\textbf{Solution:} \\\\
+	\begin{proof}
+	Since the above equation is the corollary we are supposed to use, we can simply justify our assumptions and then it follows that the above formula works. For that, we need to make sure $z_i$ is an independent, mean-zero, sub-exponential RV.
+	To show mean-zero
+	\begin{align*}
+		E[z_i] &= E \left[ y_i^2 - E[y_i^2]\right] \\
+		&= E \left[ y_i^2 \right] - E[y_i^2] \\
+		&= 0
+	\end{align*}
+	Therefore it is mean zero. Now, by the problem statement on the homework, it says we can show $z_i$ is sub-exponential with the inequality. Therefore, by definition we showed it is subexponential.
+	\par Lastly, we show it is independent. For this, we know $y_i$ is independent and that any function on an independent random varible remains independent. Thus, $y_i^2$ is independent. Now note that $E[y_i^2]$ is a constant and so redefining our random variable to account for the constant does not affect independent. 
+	Thus, $z_i$ is independent. 
+	\par Because we showed that $z_i$ is an independent, mean-zero, subexponential random variable, we can conclude that the general Bernstein inequality will hold.
+	\end{proof}
+	\item If we choose
+	\begin{equation*}
+		d = \frac{2\beta^2}{\alpha\epsilon^2}\log\left(N/\sqrt{\delta}\right)
+	\end{equation*}
+	then
+	\begin{equation*}
+		P \left( \left| \frac{1}{d} \sum_{i=1}^d z_i \right| \ge \epsilon \right) \le \frac{2\delta}{N^2}
+	\end{equation*}
+	\textbf{Solution:} \\\\
+	\begin{proof}
+	Plugging in $d$ to the formula in problem 5, we get
+	\begin{equation*}
+		P \left( \left| \frac{1}{d} \sum_{i=1}^d z_i \right| \ge \epsilon \right) \le \exp 2 \left(- \alpha \cdot \min \left( \frac{\epsilon^2}{\beta^2},\frac{\epsilon}{\beta} \right) \frac{2\beta^2}{\alpha\epsilon^2}\log\left(N/\sqrt{\delta}\right) \right)
+	\end{equation*}
+	where the alphas cancel. Also note that in small deviation regime, $\frac{\epsilon}{\beta} < 1$ which implies that if you square it, it will become even smaller. Thus, $\frac{\epsilon^2}{\beta^2}$ is the minimum. And so,
+	\begin{align*}
+		P \left( \left| \frac{1}{d} \sum_{i=1}^d z_i \right| \ge \epsilon \right) &\le \exp 2 \left(-1 \cdot \frac{\epsilon^2}{\beta^2} \frac{2\beta^2}{\epsilon^2}\log\left(N/\sqrt{\delta}\right) \right) \\
+		&= 2 \exp \left( -2 \log \left( N/\sqrt{\delta}\right)\right) \\
+		&= 2 \exp \left[ \log \left( N/\sqrt{\delta}\right)^{-2} \right] \\
+		&= 2 \left( \frac{N}{\sqrt{\delta}} \right)^{-2} \\
+		&= \frac{2 \delta}{N^2}
+	\end{align*}
+	\end{proof}
+	\item Prove the following:
+	\begin{equation*}
+		P \left( \textbf{G} = (g_{i,j}); \forall 1 \le k < l \le N, \left| \frac{\Vert \textbf{Q}(x_k - x_l) \Vert^2}{\Vert x_k - x_l \Vert^2} - 1 \right| \ge \epsilon \right) \le \delta
+	\end{equation*}
+	\textbf{Solution:} \\\\
+	\begin{proof}
+	Let $x = x_k - x_l$. Then,
+	\begin{equation*}
+		P \left(\left| \frac{\Vert \textbf{Q}x \Vert^2}{\Vert x \Vert^2} - 1 \right| \ge \epsilon \right) \le \delta
+	\end{equation*}
+	but $\textbf{Q}x = \frac{1}{\sqrt{d}}\textbf{G}x = \frac{1}{\sqrt{d}}y$. So,
+	\begin{align*}
+		P \left(\left| \frac{\Vert \frac{1}{\sqrt{d}}y \Vert^2}{\Vert x \Vert^2} - 1 \right| \ge \epsilon \right) &\le \delta \\
+		P \left(\left| \frac{\frac{1}{d} \cdot \sum_{i=1}^d y_i^2}{\Vert x \Vert^2} - 1 \right| \ge \epsilon \right) &\le \delta \\
+		P \left(\left| \frac{\frac{1}{d} \cdot \sum_{i=1}^d y_i^2 - \Vert x \Vert^2}{\Vert x \Vert^2} \right| \ge \epsilon \right) &\le \delta \\
+	\end{align*}
+	And now recall that $\Vert x \Vert^2 = Var[y_i] = E[y_i^2]$. Thus,
+	\begin{align*}
+		P \left(\left| \frac{\frac{1}{d} \cdot \sum_{i=1}^d y_i^2 - E[y_i^2]}{\Vert x \Vert^2} \right| \ge \epsilon \right) &\le \delta \\
+		P \left(\left| \frac{\frac{1}{d} \sum_{i=1}^d \left(y_i^2 - E \left[y_i^2 \right] \right)}{\Vert x \Vert^2} \right| \ge \epsilon \right) &\le \delta \\
+	\end{align*}
+	And if we let $t = \epsilon \cdot \Vert x \Vert^2$ and $z_i = y_i^2 - E \left[y_i^2 \right]$, then using the equation we proved in the above question (and in the small deviation regime), we get
+	\begin{align*}
+		P \left(\left|\frac{1}{d}\sum_{i=1}^d z_i \right| \ge t \right) &\le \frac{2 \delta}{N^2} \\
+	\end{align*}
+	Now recall that $\forall 1 \le k < l \le N$. This implies that if $k, l \in \mathbb{N}$, then $N \ge 2$, meaning that $N^2 \ge 4 > 2$ and so
+	\begin{equation*}
+		P \left(\left|\frac{1}{d}\sum_{i=1}^d z_i \right| \ge t \right) < \delta
+	\end{equation*}
+	\end{proof}
+\end{enumerate}
+\begin{center}
+	\boxed{{\textbf{| END |}}}
+\end{center}
+\end{document}
